@@ -12,20 +12,30 @@ import static org.hamcrest.CoreMatchers.is;
 
 
 public class StringCalculatorTest {
-    private StringCalculator calculator;
+    @Test
+    public void calculateCommaAndColonExpression() {
+        StringSplitter splitter = new StringSplitter(new StringExpression("1,2:3,4:5"));
+        NumberConvertor convertor = new NumberConvertor();
+        StringCalculator calculator = new StringCalculator(convertor, splitter);
 
-    @Before
-    public void setUp() throws Exception {
-        calculator = new StringCalculator();
+        assertThat(calculator.sum(), is(15));
     }
 
     @Test
-    public void shouldReturnZeroListIsEmpty() {
-        assertThat(calculator.calculate(new ArrayList<>()), is(0));
+    public void calculateCommaAndColonAndCustomDelimiter() {
+        StringSplitter splitter = new StringSplitter(new StringExpression("//;\n1,2:3;4:5;6"));
+        NumberConvertor convertor = new NumberConvertor();
+        StringCalculator calculator = new StringCalculator(convertor, splitter);
+
+        assertThat(calculator.sum(), is(21));
     }
-    
-    @Test
-    public void shouldReturnListOfSum() {
-        assertThat(calculator.calculate(Arrays.asList("1", "4", "2", "5", "3")), is(15));
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowException() {
+        StringSplitter splitter = new StringSplitter(new StringExpression("//;\n1,2:3;4:-5;6"));
+        NumberConvertor convertor = new NumberConvertor();
+        StringCalculator calculator = new StringCalculator(convertor, splitter);
+
+        calculator.sum();
     }
 }
