@@ -4,10 +4,22 @@ import java.util.Arrays;
 
 public class StringCalculator {
     public int calculate(String str) {
-        if(str.trim().isEmpty()) {
+        if(isEmpty(str)) {
             return 0;
         }
 
-        return Arrays.stream(str.split(",")).mapToInt(s -> Integer.parseInt(s)).sum();
+        return sum(split(str));
+    }
+
+    private boolean isEmpty(String str) {
+        return str.trim().isEmpty();
+    }
+
+    public int sum(String[] split) {
+        return Arrays.stream(split).mapToInt(Integer::parseInt).sum();
+    }
+
+    private String[] split(String str) {
+        return str.split(",");
     }
 }
