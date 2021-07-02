@@ -15,4 +15,10 @@ public class NumberConvertorTest {
         NumberConvertor convertor = new NumberConvertor();
         assertThat(convertor.convert(Arrays.asList("1", "2", "3", "4")), is(containsInAnyOrder(1, 2, 3, 4)));
     }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowRuntimeException() {
+        NumberConvertor convertor = new NumberConvertor();
+        convertor.convert(Arrays.asList("1", "2", "-3"));
+    }
 }
