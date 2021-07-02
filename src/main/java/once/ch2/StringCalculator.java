@@ -22,23 +22,26 @@ public class StringCalculator {
 
     private List<String> split(String str) {
         List<String> result = new ArrayList<>();
-
         String[] splitByComma = str.split(",");
 
         for(String split : splitByComma) {
-            if(split.contains(":")) {
-                String[] splitByColon = split.split(":");
-                int start = Integer.parseInt(splitByColon[0]);
-                int end = Integer.parseInt(splitByColon[1]);
-
-                for(int value = start; value <= end; value++) {
-                    result.add(String.valueOf(value));
-                }
-            } else {
-                result.add(split.trim());
-            }
+            addSplitString(split, result);
         }
 
         return result;
+    }
+
+    private void addSplitString(String str, List<String> result) {
+        if(str.contains(":")) {
+            String[] splitByColon = str.split(":");
+            int start = Integer.parseInt(splitByColon[0]);
+            int end = Integer.parseInt(splitByColon[1]);
+
+            for(int value = start; value <= end; value++) {
+                result.add(String.valueOf(value));
+            }
+        } else {
+            result.add(str.trim());
+        }
     }
 }
