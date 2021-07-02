@@ -22,19 +22,19 @@ public class StringSplitterTest {
     @Test
     public void shouldSplitColon() {
         StringSplitter splitter = new StringSplitter("2:4");
-        assertThat(splitter.split(), containsInAnyOrder("2", "3", "4"));
+        assertThat(splitter.split(), containsInAnyOrder("2", "4"));
     }
 
     @Test
     public void shouldSplitCommaAndColon() {
         StringSplitter splitter = new StringSplitter("1,2,5:7,3:4");
-        assertThat(splitter.split(), containsInAnyOrder("1", "2", "3", "4", "5", "6", "7"));
+        assertThat(splitter.split(), containsInAnyOrder("1", "2", "5", "7", "3", "4"));
     }
 
     @Test
     public void shouldSplitDuplicateNumber() {
         StringSplitter splitter = new StringSplitter("1,2,3:6,5,6");
-        assertThat(splitter.split(), containsInAnyOrder("1", "2", "3", "4", "5", "5", "6", "6"));
+        assertThat(splitter.split(), containsInAnyOrder("1", "2", "3", "6", "5", "6"));
     }
 
     @Test
@@ -52,6 +52,6 @@ public class StringSplitterTest {
     @Test
     public void shouldSplitCustomDelimiterAndCommaAndColon() {
         StringSplitter splitter = new StringSplitter("//!\n1!2:5,3!3!3,4,5:6");
-        assertThat(splitter.split(), containsInAnyOrder("1", "2", "3", "3", "3", "3", "4", "4", "5", "5", "6"));
+        assertThat(splitter.split(), containsInAnyOrder("1", "2", "5", "3", "3", "3", "4", "5", "6"));
     }
 }
