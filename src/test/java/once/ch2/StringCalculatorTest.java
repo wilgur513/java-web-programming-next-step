@@ -36,8 +36,8 @@ public class StringCalculatorTest {
 
     @Test
     public void shouldSplitComma() {
-        StringSplitter splitter = new StringSplitter("1,2");
+        StringSplitter splitter = new StringSplitter("1,2,3,4");
         List<String> expected = splitter.split();
-        assertThat(expected, is(Arrays.asList("1", "2")));
+        assertThat(expected, is(Arrays.asList("1", "2", "3", "4")));
     }
 }
