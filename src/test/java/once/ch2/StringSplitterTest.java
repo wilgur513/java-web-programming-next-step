@@ -48,4 +48,10 @@ public class StringSplitterTest {
         StringSplitter splitter = new StringSplitter("//;\n1;2,3;4;5,6;7");
         assertThat(splitter.split(), containsInAnyOrder("1", "2", "3", "4", "5", "6", "7"));
     }
+
+    @Test
+    public void shouldSplitCustomDelimiterAndCommaAndColon() {
+        StringSplitter splitter = new StringSplitter("//!\n1!2:5,3!3!3,4,5:6");
+        assertThat(splitter.split(), containsInAnyOrder("1", "2", "3", "3", "3", "3", "4", "4", "5", "5", "6"));
+    }
 }
