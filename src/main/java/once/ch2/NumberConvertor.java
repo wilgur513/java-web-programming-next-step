@@ -8,15 +8,17 @@ public class NumberConvertor {
         List<Integer> result = new ArrayList<>();
 
         for(String str : stringList) {
-            int value = Integer.parseInt(str);
-
-            if(value < 0) {
+            if(toInt(str) < 0) {
                 throw new RuntimeException();
             }
 
-            result.add(Integer.parseInt(str));
+            result.add(toInt(str));
         }
 
         return result;
+    }
+
+    private int toInt(String str) {
+        return Integer.parseInt(str);
     }
 }
