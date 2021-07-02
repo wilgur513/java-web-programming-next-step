@@ -18,9 +18,10 @@ public class StringExpression {
     }
 
     public String getExpression() {
-        if(hasCustomDelimiter())
-            return matcher.group(2);
+        return hasCustomDelimiter() ? removeCustomDelimiterHeader() : expression;
+    }
 
-        return expression;
+    private String removeCustomDelimiterHeader() {
+        return matcher.group(2);
     }
 }
