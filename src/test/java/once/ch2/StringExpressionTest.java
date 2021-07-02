@@ -7,8 +7,14 @@ import static org.hamcrest.CoreMatchers.is;
 
 public class StringExpressionTest {
     @Test
-    public void hasCustomDelimiter() {
+    public void shouldNotHasCustomDelimiter() {
         StringExpression expression = new StringExpression("1,2,3");
         assertThat(expression.hasCustomDelimiter(), is(false));
+    }
+
+    @Test
+    public void shouldHasCustomerDelimiter() {
+        StringExpression expression = new StringExpression("//;\n1;2;3");
+        assertThat(expression.hasCustomDelimiter(), is(true));
     }
 }
