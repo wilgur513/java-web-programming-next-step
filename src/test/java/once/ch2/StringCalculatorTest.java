@@ -3,6 +3,7 @@ package once.ch2;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,27 +20,12 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void shouldReturnZeroWhenStringIsBlank() {
-        StringSplitter splitter = new StringSplitter("");
-        assertThat(calculator.calculate(splitter.split()), is(0));
+    public void shouldReturnZeroListIsEmpty() {
+        assertThat(calculator.calculate(new ArrayList<>()), is(0));
     }
     
     @Test
-    public void shouldReturnSumSplitByComma() {
-        StringSplitter splitter = new StringSplitter("1,2");
-        assertThat(calculator.calculate(splitter.split()), is(3));
-    }
-
-    @Test
-    public void shouldReturnContinuousSum() {
-        StringSplitter splitter = new StringSplitter("1,2,3,5:8");
-        assertThat(calculator.calculate(splitter.split()), is(32));
-    }
-
-    @Test
-    public void shouldSplitComma() {
-        StringSplitter splitter = new StringSplitter("1,2,3,4");
-        List<String> expected = splitter.split();
-        assertThat(expected, is(Arrays.asList("1", "2", "3", "4")));
+    public void shouldReturnListOfSum() {
+        assertThat(calculator.calculate(Arrays.asList("1", "4", "2", "5", "3")), is(15));
     }
 }
