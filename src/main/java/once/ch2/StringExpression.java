@@ -1,5 +1,7 @@
 package once.ch2;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,5 +36,12 @@ public class StringExpression {
 
     public boolean isBlank() {
         return expression.trim().isEmpty();
+    }
+
+    public List<String> splitByCustomDelimiter() {
+        if(hasCustomDelimiter())
+            return Arrays.asList(getExpression().split(getCustomDelimiter()));
+
+        return Arrays.asList(getExpression());
     }
 }

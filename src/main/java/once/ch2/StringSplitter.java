@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 public class StringSplitter {
     private final StringExpression expression;
 
@@ -17,22 +19,10 @@ public class StringSplitter {
             return new ArrayList<>();
         }
 
-        return splitByCustomDelimiter(splitByCommaAndColon(expression.getExpression())).stream()
-                .collect(Collectors.toList());
+        return splitByCommaAndColon(expression.splitByCustomDelimiter()).stream().collect(toList());
     }
 
-    private List<String> splitByCommaAndColon(String str) {
-        return Arrays.asList(str.split(",|:"));
-    }
-
-    private List<String> splitByCustomDelimiter(List<String> stringList) {
-        if(expression.hasCustomDelimiter()) {
-            return stringList.stream()
-                    .map(s -> s.split(expression.getCustomDelimiter()))
-                    .flatMap(Arrays::stream)
-                    .collect(Collectors.toList());
-        }
-
-        return stringList;
+    private List<String> splitByCommaAndColon(List<String> stringList) {
+        return stringList.stream().map(s -> s.split(",|:")).flatMap(Arrays::stream).collect(toList());
     }
 }

@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
 public class StringExpressionTest {
@@ -51,5 +52,11 @@ public class StringExpressionTest {
     public void shouldSplitByCustomDelimiter() {
         StringExpression expression = new StringExpression("//;\n1;2;3");
         assertThat(expression.splitByCustomDelimiter(), containsInAnyOrder("1", "2", "3"));
+    }
+
+    @Test
+    public void shouldReturnOriginExpressionWithoutCustomDelimiter() {
+        StringExpression expression = new StringExpression("1,2,3");
+        assertThat(expression.splitByCustomDelimiter(), containsInAnyOrder("1,2,3"));
     }
 }
