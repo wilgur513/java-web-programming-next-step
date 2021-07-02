@@ -22,13 +22,16 @@ public class StringCalculator {
 
     private List<String> split(String str) {
         List<String> result = new ArrayList<>();
-        String[] splitByComma = str.split(",");
 
-        for(String split : splitByComma) {
+        for(String split : splitByComma(str)) {
             addSplitString(split, result);
         }
 
         return result;
+    }
+
+    private String[] splitByComma(String str) {
+        return str.split(",");
     }
 
     private void addSplitString(String str, List<String> result) {
