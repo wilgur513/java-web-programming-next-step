@@ -12,4 +12,10 @@ public class StringCalculatorTest {
         StringCalculator calculator = new StringCalculator();
         assertThat(calculator.calculate(""), is(0));
     }
+    
+    @Test
+    public void shouldReturnSumSplitByComma() {
+         StringCalculator calculator = new StringCalculator();
+         assertThat(calculator.calculate("1,2"), is(3));
+    }
 }
