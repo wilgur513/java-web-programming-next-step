@@ -37,15 +37,18 @@ public class StringSplitter {
         return str.trim().isEmpty();
     }
 
+    private List<String> splitByCommaAndColon(String str) {
+        return Arrays.asList(str.split(",|:"));
+    }
+
     private List<String> splitByCustomDelimiter(List<String> str) {
         if(isBlank(customDelimiter)) {
             return str;
         }
 
-        return str.stream().map(s -> s.split(customDelimiter)).flatMap(Arrays::stream).collect(Collectors.toList());
-    }
-
-    private List<String> splitByCommaAndColon(String str) {
-        return Arrays.asList(str.split(",|:"));
+        return str.stream()
+            .map(s -> s.split(customDelimiter))
+            .flatMap(Arrays::stream)
+            .collect(Collectors.toList());
     }
 }
