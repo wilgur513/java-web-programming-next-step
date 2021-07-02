@@ -1,8 +1,9 @@
 package once.ch2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class StringCalculator {
     public int calculate(String str) {
@@ -22,13 +23,9 @@ public class StringCalculator {
     }
 
     private List<String> split(String str) {
-        List<String> result = new ArrayList<>();
-
-        for(String split : splitByComma(str)) {
-            result.addAll(splitString(split));
-        }
-
-        return result;
+        return Arrays.stream(splitByComma(str))
+            .map(this::splitString).flatMap(List::stream)
+            .collect(Collectors.toList());
     }
 
     private String[] splitByComma(String str) {
@@ -36,11 +33,7 @@ public class StringCalculator {
     }
 
     private List<String> splitString(String str) {
-        if(hasColon(str)) {
-            return continuousString(str);
-        } else {
-            return singleString(str);
-        }
+        return hasColon(str) ? continuousString(str) : singleString(str);
     }
 
     private boolean hasColon(String str) {
@@ -48,11 +41,8 @@ public class StringCalculator {
     }
 
     private List<String> continuousString(String str) {
-        List<String> result = new ArrayList<>();
-        for(int value = low(str); value <= high(str); value++) {
-            result.add(String.valueOf(value));
-        }
-        return result;
+        return IntStream.rangeClosed(low(str), high(str))
+            .mapToObj(String::valueOf).collect(Collectors.toList());
     }
 
     private List<String> singleString(String str) {
