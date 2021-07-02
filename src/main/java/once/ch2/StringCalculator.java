@@ -1,7 +1,5 @@
 package once.ch2;
 
-import java.util.List;
-
 public class StringCalculator {
     private NumberConvertor convertor;
     private StringSplitter splitter;

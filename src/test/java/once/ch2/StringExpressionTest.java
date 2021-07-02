@@ -59,4 +59,10 @@ public class StringExpressionTest {
         StringExpression expression = new StringExpression("1,2,3");
         assertThat(expression.splitByCustomDelimiter(), containsInAnyOrder("1,2,3"));
     }
+
+    @Test(expected = IllegalStateException.class)
+    public void shouldThrowException() {
+        StringExpression expression = new StringExpression("1,2,3");
+        expression.getCustomDelimiter();
+    }
 }
