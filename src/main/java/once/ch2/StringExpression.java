@@ -14,7 +14,7 @@ public class StringExpression {
     }
 
     public boolean hasCustomDelimiter() {
-        return matcher.find();
+        return matcher.matches();
     }
 
     public String getExpression() {
@@ -23,5 +23,12 @@ public class StringExpression {
 
     private String removeCustomDelimiterHeader() {
         return matcher.group(2);
+    }
+
+    public String getCustomDelimiter() {
+        if(hasCustomDelimiter())
+            return matcher.group(1);
+
+        throw new IllegalStateException();
     }
 }

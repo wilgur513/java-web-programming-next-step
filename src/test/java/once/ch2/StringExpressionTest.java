@@ -32,7 +32,7 @@ public class StringExpressionTest {
 
     @Test
     public void shouldGetCustomDelimiter() {
-        StringExpression expression = new StringExpression("//!\n1!2!3");
-        assertThat(expression.getCustomDelimiter(), is("!"));
+        StringExpression expression = new StringExpression("//;\n1;2;3");
+        assertThat(expression.getCustomDelimiter(), is(";"));
     }
 }

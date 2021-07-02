@@ -8,28 +8,18 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class StringSplitter {
-    private static final Pattern CUSTOM_DELIMITER_PATTERN = Pattern.compile("//(.)\n(.*)");
-    private final String customDelimiter;
-    private final String str;
+    private final StringExpression expression;
 
-    public StringSplitter(String str) {
-        Matcher m = CUSTOM_DELIMITER_PATTERN.matcher(str);
-
-        if(m.find()) {
-            customDelimiter = m.group(1);
-            this.str = m.group(2);
-        } else {
-            customDelimiter = "";
-            this.str = str;
-        }
+    public StringSplitter(StringExpression expression) {
+        this.expression = expression;
     }
 
     public List<String> split() {
-        if(isBlank(str)) {
+        if(isBlank(expression.getExpression())) {
             return new ArrayList<>();
         }
 
-        return splitByCustomDelimiter(splitByCommaAndColon(str)).stream()
+        return splitByCustomDelimiter(splitByCommaAndColon(expression.getExpression())).stream()
                 .collect(Collectors.toList());
     }
 
@@ -41,14 +31,14 @@ public class StringSplitter {
         return Arrays.asList(str.split(",|:"));
     }
 
-    private List<String> splitByCustomDelimiter(List<String> str) {
-        if(isBlank(customDelimiter)) {
-            return str;
+    private List<String> splitByCustomDelimiter(List<String> stringList) {
+        if(expression.hasCustomDelimiter()) {
+            return stringList.stream()
+                    .map(s -> s.split(expression.getCustomDelimiter()))
+                    .flatMap(Arrays::stream)
+                    .collect(Collectors.toList());
         }
 
-        return str.stream()
-            .map(s -> s.split(customDelimiter))
-            .flatMap(Arrays::stream)
-            .collect(Collectors.toList());
+        return stringList;
     }
 }
