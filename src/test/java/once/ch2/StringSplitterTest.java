@@ -36,4 +36,10 @@ public class StringSplitterTest {
         StringSplitter splitter = new StringSplitter("1,2,3:6,5,6");
         assertThat(splitter.split(), containsInAnyOrder("1", "2", "3", "4", "5", "5", "6", "6"));
     }
+    
+    @Test
+    public void shouldSplitCustomDelimiter() {
+        StringSplitter splitter = new StringSplitter("//;\n1;2;3");
+        assertThat(splitter.split(), containsInAnyOrder("1", "2", "3"));
+    }
 }
