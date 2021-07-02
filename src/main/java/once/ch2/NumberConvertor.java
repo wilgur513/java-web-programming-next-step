@@ -8,7 +8,7 @@ public class NumberConvertor {
         List<Integer> result = new ArrayList<>();
 
         for(String str : stringList) {
-            if(toInt(str) < 0) {
+            if(isNegativeString(str)) {
                 throw new RuntimeException();
             }
 
@@ -20,5 +20,9 @@ public class NumberConvertor {
 
     private int toInt(String str) {
         return Integer.parseInt(str);
+    }
+
+    private boolean isNegativeString(String str) {
+        return toInt(str) < 0;
     }
 }
