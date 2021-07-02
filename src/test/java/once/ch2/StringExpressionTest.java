@@ -35,4 +35,13 @@ public class StringExpressionTest {
         StringExpression expression = new StringExpression("//;\n1;2;3");
         assertThat(expression.getCustomDelimiter(), is(";"));
     }
+
+    @Test
+    public void isBlank() {
+        StringExpression expression = new StringExpression("");
+        assertThat(expression.isBlank(), is(true));
+
+        expression = new StringExpression("1,2,3");
+        assertThat(expression.isBlank(), is(false));
+    }
 }
