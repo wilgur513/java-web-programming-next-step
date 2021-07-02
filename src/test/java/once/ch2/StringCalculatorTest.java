@@ -28,5 +28,6 @@ public class StringCalculatorTest {
     @Test
     public void shouldReturnContinuousSum() {
          assertThat(calculator.calculate("1:3,4"), is(10));
+         assertThat(calculator.calculate("1,2,3,5:6,"), is(17));
     }
 }
