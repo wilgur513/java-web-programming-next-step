@@ -36,9 +36,8 @@ public class StringCalculator {
 
     private void addSplitString(String str, List<String> result) {
         if(hasColon(str)) {
-            String[] splitByColon = str.split(":");
-            int start = Integer.parseInt(splitByColon[0]);
-            int end = Integer.parseInt(splitByColon[1]);
+            int start = Integer.parseInt(splitByColon(str)[0]);
+            int end = Integer.parseInt(splitByColon(str)[1]);
 
             for(int value = start; value <= end; value++) {
                 result.add(String.valueOf(value));
@@ -50,5 +49,9 @@ public class StringCalculator {
 
     private boolean hasColon(String str) {
         return str.contains(":");
+    }
+
+    private String[] splitByColon(String str) {
+        return str.split(":");
     }
 }
