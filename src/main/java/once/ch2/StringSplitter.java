@@ -14,7 +14,7 @@ public class StringSplitter {
     }
 
     public List<String> split() {
-        if(isEmpty(str)) {
+        if(isBlank(str)) {
             return new ArrayList<>();
         }
 
@@ -23,7 +23,7 @@ public class StringSplitter {
                 .collect(Collectors.toList());
     }
 
-    private boolean isEmpty(String str) {
+    private boolean isBlank(String str) {
         return str.trim().isEmpty();
     }
 
