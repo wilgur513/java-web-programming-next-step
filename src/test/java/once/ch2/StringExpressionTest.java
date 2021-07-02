@@ -17,4 +17,10 @@ public class StringExpressionTest {
         StringExpression expression = new StringExpression("//;\n1;2;3");
         assertThat(expression.hasCustomDelimiter(), is(true));
     }
+
+    @Test
+    public void shouldGetExpression() {
+        StringExpression expression = new StringExpression("1,2,3");
+        assertThat(expression.getExpression(), "1,2,3");
+    }
 }
