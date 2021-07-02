@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NumberConvertor {
-
     public List<Integer> convert(List<String> stringList) {
         List<Integer> result = new ArrayList<>();
 
         for(String str : stringList) {
+            int value = Integer.parseInt(str);
+
+            if(value < 0) {
+                throw new RuntimeException();
+            }
+
             result.add(Integer.parseInt(str));
         }
 
