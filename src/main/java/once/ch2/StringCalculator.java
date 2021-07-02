@@ -38,7 +38,7 @@ public class StringCalculator {
         if(hasColon(str)) {
             addContinuousString(str, result);
         } else {
-            result.add(str.trim());
+            addSingleString(str, result);
         }
     }
 
@@ -50,6 +50,10 @@ public class StringCalculator {
         for(int value = low(str); value <= high(str); value++) {
             result.add(String.valueOf(value));
         }
+    }
+
+    private void addSingleString(String str, List<String> result) {
+        result.add(str.trim());
     }
 
     private int low(String str) {
