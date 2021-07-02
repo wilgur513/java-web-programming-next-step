@@ -24,4 +24,9 @@ public class StringCalculatorTest {
     public void shouldReturnSumSplitByComma() {
          assertThat(calculator.calculate("1,2"), is(3));
     }
+
+    @Test
+    public void shouldReturnContinuousSum() {
+         assertThat(calculator.calculate("1:3,4"), is(10));
+    }
 }

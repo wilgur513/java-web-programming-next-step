@@ -1,6 +1,7 @@
 package once.ch2;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StringCalculator {
     public int calculate(String str) {
@@ -15,11 +16,29 @@ public class StringCalculator {
         return str.trim().isEmpty();
     }
 
-    public int sum(String[] split) {
-        return Arrays.stream(split).mapToInt(Integer::parseInt).sum();
+    public int sum(List<String> split) {
+        return split.stream().mapToInt(Integer::parseInt).sum();
     }
 
-    private String[] split(String str) {
-        return str.split(",");
+    private List<String> split(String str) {
+        List<String> result = new ArrayList<>();
+
+        String[] splitByComma = str.split(",");
+
+        for(String split : splitByComma) {
+            if(split.contains(":")) {
+                String[] splitByColon = split.split(":");
+                int start = Integer.parseInt(splitByColon[0]);
+                int end = Integer.parseInt(splitByColon[1]);
+
+                for(int value = start; value <= end; value++) {
+                    result.add(String.valueOf(value));
+                }
+            } else {
+                result.add(split.trim());
+            }
+        }
+
+        return result;
     }
 }
