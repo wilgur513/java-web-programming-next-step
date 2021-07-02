@@ -36,10 +36,7 @@ public class StringCalculator {
 
     private void addSplitString(String str, List<String> result) {
         if(hasColon(str)) {
-            int start = Integer.parseInt(splitByColon(str)[0]);
-            int end = Integer.parseInt(splitByColon(str)[1]);
-
-            for(int value = start; value <= end; value++) {
+            for(int value = low(str); value <= high(str); value++) {
                 result.add(String.valueOf(value));
             }
         } else {
@@ -53,5 +50,13 @@ public class StringCalculator {
 
     private String[] splitByColon(String str) {
         return str.split(":");
+    }
+
+    private int low(String str) {
+        return Integer.parseInt(splitByColon(str)[0]);
+    }
+
+    private int high(String str) {
+        return Integer.parseInt(splitByColon(str)[1]);
     }
 }
