@@ -21,6 +21,12 @@ public class StringExpressionTest {
     @Test
     public void shouldGetExpression() {
         StringExpression expression = new StringExpression("1,2,3");
-        assertThat(expression.getExpression(), "1,2,3");
+        assertThat(expression.getExpression(), is("1,2,3"));
+    }
+
+    @Test
+    public void shouldGetExpressionWithoutCustomDelimiterHeader() {
+        StringExpression expression = new StringExpression("//;\n1;2;3");
+        assertThat(expression.getExpression(), is("1;2;3"));
     }
 }
