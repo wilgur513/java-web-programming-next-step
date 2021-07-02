@@ -8,21 +8,25 @@ public class NumberConvertor {
         List<Integer> result = new ArrayList<>();
 
         for(String str : stringList) {
-            if(isNegativeString(str)) {
-                throw new RuntimeException();
-            }
-
-            result.add(toInt(str));
+            result.add(convert(str));
         }
 
         return result;
+    }
+
+    private int convert(String str) {
+        if(isNegative(toInt(str))) {
+            throw new RuntimeException();
+        }
+
+        return toInt(str);
     }
 
     private int toInt(String str) {
         return Integer.parseInt(str);
     }
 
-    private boolean isNegativeString(String str) {
-        return toInt(str) < 0;
+    private boolean isNegative(int value) {
+        return value < 0;
     }
 }
