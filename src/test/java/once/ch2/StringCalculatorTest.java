@@ -1,5 +1,6 @@
 package once.ch2;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -7,15 +8,20 @@ import static org.hamcrest.CoreMatchers.is;
 
 
 public class StringCalculatorTest {
+    private StringCalculator calculator;
+
+    @Before
+    public void setUp() throws Exception {
+        calculator = new StringCalculator();
+    }
+
     @Test
     public void shouldReturnZeroWhenStringIsBlank() {
-        StringCalculator calculator = new StringCalculator();
         assertThat(calculator.calculate(""), is(0));
     }
     
     @Test
     public void shouldReturnSumSplitByComma() {
-         StringCalculator calculator = new StringCalculator();
          assertThat(calculator.calculate("1,2"), is(3));
     }
 }
