@@ -18,6 +18,9 @@ public class StringExpression {
     }
 
     public String getExpression() {
+        if(hasCustomDelimiter())
+            return matcher.group(2);
+
         return expression;
     }
 }
