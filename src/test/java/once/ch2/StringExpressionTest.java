@@ -2,8 +2,10 @@ package once.ch2;
 
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 public class StringExpressionTest {
     @Test
@@ -43,5 +45,11 @@ public class StringExpressionTest {
 
         expression = new StringExpression("1,2,3");
         assertThat(expression.isBlank(), is(false));
+    }
+
+    @Test
+    public void shouldSplitByCustomDelimiter() {
+        StringExpression expression = new StringExpression("//;\n1;2;3");
+        assertThat(expression.splitByCustomDelimiter(), containsInAnyOrder("1", "2", "3"));
     }
 }
