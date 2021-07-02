@@ -15,16 +15,12 @@ public class StringSplitter {
     }
 
     public List<String> split() {
-        if(isBlank(expression.getExpression())) {
+        if(expression.isBlank()) {
             return new ArrayList<>();
         }
 
         return splitByCustomDelimiter(splitByCommaAndColon(expression.getExpression())).stream()
                 .collect(Collectors.toList());
-    }
-
-    private boolean isBlank(String str) {
-        return str.trim().isEmpty();
     }
 
     private List<String> splitByCommaAndColon(String str) {

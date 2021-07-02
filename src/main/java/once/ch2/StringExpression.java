@@ -31,4 +31,8 @@ public class StringExpression {
 
         throw new IllegalStateException();
     }
+
+    public boolean isBlank() {
+        return expression.trim().isEmpty();
+    }
 }
