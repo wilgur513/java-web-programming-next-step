@@ -29,4 +29,10 @@ public class StringExpressionTest {
         StringExpression expression = new StringExpression("//;\n1;2;3");
         assertThat(expression.getExpression(), is("1;2;3"));
     }
+
+    @Test
+    public void shouldGetCustomDelimiter() {
+        StringExpression expression = new StringExpression("//!\n1!2!3");
+        assertThat(expression.getCustomDelimiter(), is("!"));
+    }
 }
