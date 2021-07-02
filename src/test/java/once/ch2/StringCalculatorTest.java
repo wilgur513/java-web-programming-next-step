@@ -20,18 +20,20 @@ public class StringCalculatorTest {
 
     @Test
     public void shouldReturnZeroWhenStringIsBlank() {
-        assertThat(calculator.calculate(""), is(0));
+        StringSplitter splitter = new StringSplitter("");
+        assertThat(calculator.calculate(splitter.split()), is(0));
     }
     
     @Test
     public void shouldReturnSumSplitByComma() {
-         assertThat(calculator.calculate("1,2"), is(3));
+        StringSplitter splitter = new StringSplitter("1,2");
+        assertThat(calculator.calculate(splitter.split()), is(3));
     }
 
     @Test
     public void shouldReturnContinuousSum() {
-         assertThat(calculator.calculate("1:3,4"), is(10));
-         assertThat(calculator.calculate("1,2,3,5:8"), is(32));
+        StringSplitter splitter = new StringSplitter("1,2,3,5:8");
+        assertThat(calculator.calculate(splitter.split()), is(32));
     }
 
     @Test

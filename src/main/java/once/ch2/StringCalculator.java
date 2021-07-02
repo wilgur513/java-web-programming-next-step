@@ -6,58 +6,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class StringCalculator {
-    public int calculate(String str) {
-        if(isEmpty(str)) {
-            return 0;
-        }
-
-        return sum(split(str));
-    }
-
-    private boolean isEmpty(String str) {
-        return str.trim().isEmpty();
+    public int calculate(List<String> stringList) {
+        return sum(stringList);
     }
 
     public int sum(List<String> split) {
         return split.stream().mapToInt(Integer::parseInt).sum();
-    }
-
-    private List<String> split(String str) {
-        return Arrays.stream(splitByComma(str))
-            .map(this::splitString).flatMap(List::stream)
-            .collect(Collectors.toList());
-    }
-
-    private String[] splitByComma(String str) {
-        return str.split(",");
-    }
-
-    private List<String> splitString(String str) {
-        return hasColon(str) ? continuousString(str) : singleString(str);
-    }
-
-    private boolean hasColon(String str) {
-        return str.contains(":");
-    }
-
-    private List<String> continuousString(String str) {
-        return IntStream.rangeClosed(low(str), high(str))
-            .mapToObj(String::valueOf).collect(Collectors.toList());
-    }
-
-    private List<String> singleString(String str) {
-        return Arrays.asList(str.trim());
-    }
-
-    private int low(String str) {
-        return Integer.parseInt(splitByColon(str)[0]);
-    }
-
-    private int high(String str) {
-        return Integer.parseInt(splitByColon(str)[1]);
-    }
-
-    private String[] splitByColon(String str) {
-        return str.split(":");
     }
 }
