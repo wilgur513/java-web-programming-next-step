@@ -18,10 +18,18 @@ public class StringSplitter {
             return new ArrayList<>();
         }
 
-        return splitByCommaAndColon(expression.splitByCustomDelimiter()).stream().collect(toList());
+        return splitByCommaAndColon(splitByCustomDelimiter()).stream().collect(toList());
     }
 
     private List<String> splitByCommaAndColon(List<String> stringList) {
         return stringList.stream().map(s -> s.split(",|:")).flatMap(Arrays::stream).collect(toList());
+    }
+
+
+    private List<String> splitByCustomDelimiter() {
+        if(expression.hasCustomDelimiter())
+            return Arrays.asList(expression.getExpression().split(expression.getCustomDelimiter()));
+
+        return Arrays.asList(expression.getExpression());
     }
 }
