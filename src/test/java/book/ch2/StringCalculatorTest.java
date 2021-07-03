@@ -16,7 +16,12 @@ public class StringCalculatorTest {
 
     @Test
     public void add_null_또는_빈문자() {
-        assertThat(0, is(cal.add(null)));
-        assertThat(0, is(cal.add("")));
+        assertThat(cal.add(null), is(0));
+        assertThat(cal.add(""), is(0));
+    }
+
+    @Test
+    public void add_숫자하나() {
+        assertThat(cal.add("1"), is(1));
     }
 }
