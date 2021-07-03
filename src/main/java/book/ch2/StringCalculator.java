@@ -6,7 +6,7 @@ public class StringCalculator {
             return 0;
         }
 
-        return sum(toInts(text.split(",")));
+        return sum(toInts(text.split(",|:")));
     }
 
     private boolean isBlank(String text) {
