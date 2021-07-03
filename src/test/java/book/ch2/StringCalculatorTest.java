@@ -34,4 +34,9 @@ public class StringCalculatorTest {
     public void add_쉼표_또는_콜론구분자() {
         assertThat(cal.add("1,2:3"), is(6));
     }
+
+    @Test
+    public void add_custom_구분자() {
+        assertThat(cal.add("//;\n1;2;3"), is(6));
+    }
 }
