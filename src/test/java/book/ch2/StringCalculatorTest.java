@@ -39,4 +39,9 @@ public class StringCalculatorTest {
     public void add_custom_구분자() {
         assertThat(cal.add("//;\n1;2;3"), is(6));
     }
+
+    @Test(expected = RuntimeException.class)
+    public void add_negative() {
+        cal.add("-1,2,3");
+    }
 }
