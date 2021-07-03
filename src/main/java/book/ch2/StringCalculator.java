@@ -6,11 +6,15 @@ public class StringCalculator {
             return 0;
         }
 
-        return sum(toInts(text.split(",|:")));
+        return sum(toInts(split(text)));
     }
 
     private boolean isBlank(String text) {
         return text == null || text.isEmpty();
+    }
+
+    private String[] split(String text) {
+        return text.split(",|:");
     }
 
     private int[] toInts(String[] values) {
