@@ -37,11 +37,4 @@ public class StringExpression {
     public boolean isBlank() {
         return expression.trim().isEmpty();
     }
-
-    public List<String> splitByCustomDelimiter() {
-        if(hasCustomDelimiter())
-            return Arrays.asList(getExpression().split(getCustomDelimiter()));
-
-        return Arrays.asList(getExpression());
-    }
 }

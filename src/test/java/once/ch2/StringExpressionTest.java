@@ -48,18 +48,6 @@ public class StringExpressionTest {
         assertThat(expression.isBlank(), is(false));
     }
 
-    @Test
-    public void shouldSplitByCustomDelimiter() {
-        StringExpression expression = new StringExpression("//;\n1;2;3");
-        assertThat(expression.splitByCustomDelimiter(), containsInAnyOrder("1", "2", "3"));
-    }
-
-    @Test
-    public void shouldReturnOriginExpressionWithoutCustomDelimiter() {
-        StringExpression expression = new StringExpression("1,2,3");
-        assertThat(expression.splitByCustomDelimiter(), containsInAnyOrder("1,2,3"));
-    }
-
     @Test(expected = IllegalStateException.class)
     public void shouldThrowException() {
         StringExpression expression = new StringExpression("1,2,3");
