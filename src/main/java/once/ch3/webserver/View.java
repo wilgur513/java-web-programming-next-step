@@ -18,7 +18,10 @@ public class View {
     public byte[] getBody() {
         File file = new File("webapp/" + url);
         log.debug("file: {}", file.getAbsolutePath());
+        return readAllBytes(file);
+    }
 
+    private byte[] readAllBytes(File file) {
         try {
             return Files.readAllBytes(file.toPath());
         } catch (IOException e) {
