@@ -15,9 +15,23 @@ public class HttpResponse {
         this.dos = new DataOutputStream(out);
     }
 
-    public void writeView(View view) {
-        response200Header(view.getBody().length);
-        responseBody(view.getBody());
+    public void writeView(int statusCode, View view) {
+        if(statusCode == 200) {
+            response200Header(view.getBody().length);
+            responseBody(view.getBody());
+        } else {
+            response302Header();
+        }
+    }
+
+    private void response302Header() {
+        try {
+            dos.writeBytes("HTTP/1.1 302 Found \r\n");
+            dos.writeBytes("Location: /index.html \r\n");
+            dos.writeBytes("\r\n");
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
     }
 
     private void response200Header(int lengthOfBodyContent) {

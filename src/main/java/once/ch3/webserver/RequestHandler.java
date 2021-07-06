@@ -29,9 +29,10 @@ public class RequestHandler extends Thread {
                 User user = createUser(request);
                 log.debug("user: {}", user);
                 DataBase.addUser(user);
+                response.writeView(302, null);
             } else {
                 View view = new View(request.getUrl());
-                response.writeView(view);
+                response.writeView(200, view);
             }
         } catch (IOException e) {
             log.error(e.getMessage());
