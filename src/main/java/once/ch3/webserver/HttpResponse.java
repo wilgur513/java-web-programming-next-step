@@ -15,12 +15,20 @@ public class HttpResponse {
         this.dos = new DataOutputStream(out);
     }
 
-    public void writeView(int statusCode, View view) {
+    public void writeHeader(int statusCode, int length) {
         if(statusCode == 200) {
-            response200Header(view.getBody().length);
-            responseBody(view.getBody());
-        } else {
+            response200Header(length);
+        }else {
             response302Header();
+        }
+    }
+
+    public void writeBody(byte[] body) {
+        try {
+            dos.write(body, 0, body.length);
+            dos.flush();
+        } catch (IOException e) {
+            log.error(e.getMessage());
         }
     }
 
@@ -40,15 +48,6 @@ public class HttpResponse {
             dos.writeBytes("Content-Type: text/html;charset=utf-8\r\n");
             dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
             dos.writeBytes("\r\n");
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
-
-    private void responseBody(byte[] body) {
-        try {
-            dos.write(body, 0, body.length);
-            dos.flush();
         } catch (IOException e) {
             log.error(e.getMessage());
         }
