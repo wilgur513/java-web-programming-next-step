@@ -1,4 +1,4 @@
-package util;
+package book.ch4.util;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import util.HttpRequestUtils.Pair;
+import book.ch4.util.HttpRequestUtils.Pair;
 
 public class HttpRequestUtilsTest {
     @Test

@@ -1,4 +1,4 @@
-package util;
+package book.ch4.util;
 
 import java.util.Arrays;
 import java.util.Map;

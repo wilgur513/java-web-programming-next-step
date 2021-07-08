@@ -1,4 +1,4 @@
-package model;
+package book.ch4.model;
 
 public class User {
     private String userId;
