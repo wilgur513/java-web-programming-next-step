@@ -1,4 +1,4 @@
-package book.ch4.util;
+package book.ch5.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
