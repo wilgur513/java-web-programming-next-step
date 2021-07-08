@@ -15,39 +15,34 @@ public class HttpResponse {
         this.dos = new DataOutputStream(out);
     }
 
-    public void writeHeader(int statusCode, int length) {
+    public void writeStatus(int statusCode) {
         if(statusCode == 200) {
-            response200Header(length);
-        }else {
-            response302Header();
+            writeHeader("HTTP/1.1 200 OK");
+        } else if(statusCode == 302) {
+            writeHeader("HTTP/1.1 302 Found");
         }
+    }
+
+    public void writeHeader(String key, String value) {
+        writeHeader(key + ": " + value);
+    }
+
+    private void writeHeader(String text) {
+        try {
+            dos.writeBytes(text + "\r\n");
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    public void writeBlank() {
+        writeHeader("");
     }
 
     public void writeBody(byte[] body) {
         try {
             dos.write(body, 0, body.length);
             dos.flush();
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
-
-    private void response302Header() {
-        try {
-            dos.writeBytes("HTTP/1.1 302 Found \r\n");
-            dos.writeBytes("Location: /index.html \r\n");
-            dos.writeBytes("\r\n");
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
-
-    private void response200Header(int lengthOfBodyContent) {
-        try {
-            dos.writeBytes("HTTP/1.1 200 OK \r\n");
-            dos.writeBytes("Content-Type: text/html;charset=utf-8\r\n");
-            dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
-            dos.writeBytes("\r\n");
         } catch (IOException e) {
             log.error(e.getMessage());
         }

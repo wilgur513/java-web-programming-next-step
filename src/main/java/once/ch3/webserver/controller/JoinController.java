@@ -17,7 +17,9 @@ public class JoinController implements Controller {
         User user = createUser(req);
         DataBase.addUser(user);
 
-        res.writeHeader(302, 0);
+        res.writeStatus(302);
+        res.writeHeader("Location", "/index.html");
+        res.writeBlank();
     }
 
     private User createUser(HttpRequest request) {

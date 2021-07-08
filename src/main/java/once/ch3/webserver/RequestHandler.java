@@ -3,9 +3,7 @@ package once.ch3.webserver;
 import java.io.*;
 import java.net.Socket;
 
-import once.ch3.webserver.controller.Controller;
-import once.ch3.webserver.controller.JoinController;
-import once.ch3.webserver.controller.StaticResourceController;
+import once.ch3.webserver.controller.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +11,10 @@ public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
     private final Controller[] controllers = {
             new StaticResourceController(),
-            new JoinController()
+            new JoinController(),
+            new LoginController(),
+            new CssController(),
+            new UserListController()
     };
 
     private Socket connection;
