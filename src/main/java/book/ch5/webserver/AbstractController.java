@@ -3,13 +3,13 @@ package book.ch5.webserver;
 public abstract class AbstractController implements Controller{
     @Override
     public void service(HttpRequest request, HttpResponse response) {
-        if(request.getMethod() == HttpMethod.GET) {
-            doGet(request, response);
-        } else {
+        if(request.getMethod().isPost()) {
             doPost(request, response);
+        } else {
+            doGet(request, response);
         }
     }
 
-    public abstract void doGet(HttpRequest request, HttpResponse response);
-    public abstract void doPost(HttpRequest request, HttpResponse response);
+    protected void doGet(HttpRequest request, HttpResponse response) {}
+    protected void doPost(HttpRequest request, HttpResponse response) {}
 }
