@@ -18,7 +18,7 @@ public class HttpRequestTest {
         InputStream in = new FileInputStream(new File(testDir + "Http_GET.txt"));
         HttpRequest request = new HttpRequest(in);
 
-        assertThat(request.getMethod(), is("GET"));
+        assertThat(request.getMethod(), is(HttpMethod.GET));
         assertThat(request.getPath(), is("/user/create"));
         assertThat(request.getHeader("Connection"), is("keep-alive"));
         assertThat(request.getParameter("userId"), is("javajigi"));
@@ -29,7 +29,7 @@ public class HttpRequestTest {
         InputStream in = new FileInputStream(new File(testDir + "Http_POST.txt"));
         HttpRequest request = new HttpRequest(in);
 
-        assertThat(request.getMethod(), is("POST"));
+        assertThat(request.getMethod(), is(HttpMethod.POST));
         assertThat(request.getPath(), is("/user/create"));
         assertThat(request.getHeader("Connection"), is("keep-alive"));
         assertThat(request.getParameter("userId"), is("javajigi"));
