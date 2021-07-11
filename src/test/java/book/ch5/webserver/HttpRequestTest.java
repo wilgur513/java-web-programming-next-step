@@ -26,7 +26,7 @@ public class HttpRequestTest {
 
     @Test
     public void request_POST() throws FileNotFoundException {
-        InputStream in = new FileInputStream(new File(testDir + "Http_GET.txt"));
+        InputStream in = new FileInputStream(new File(testDir + "Http_POST.txt"));
         HttpRequest request = new HttpRequest(in);
 
         assertThat(request.getMethod(), is("POST"));
