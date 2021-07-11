@@ -3,7 +3,7 @@ package book.ch4.webserver;
 import book.ch4.db.DataBase;
 import book.ch4.util.HttpRequestUtils;
 import book.ch4.util.IOUtils;
-import book.ch5.db.model.User;
+import book.ch4.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

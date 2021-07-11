@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import book.ch5.db.DataBase;
-import book.ch5.db.model.User;
+import book.ch5.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import book.ch5.util.HttpRequestUtils;

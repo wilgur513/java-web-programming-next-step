@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import book.ch5.db.model.User;
+import book.ch5.model.User;
 
 public class DataBase {
     private static Map<String, User> users = Maps.newHashMap();
