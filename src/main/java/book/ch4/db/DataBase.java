@@ -1,6 +1,6 @@
 package book.ch4.db;
 
-import book.ch5.db.model.User;
+import book.ch4.model.User;
 import com.google.common.collect.Maps;
 
 import java.util.Collection;
