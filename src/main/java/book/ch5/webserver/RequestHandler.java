@@ -28,16 +28,14 @@ public class RequestHandler extends Thread {
             HttpRequest request = new HttpRequest(in);
             HttpResponse response = new HttpResponse(out);
             String url = getDefaultPath(request.getPath());
+            Controller controller = RequestMapping.getController(url);
 
-            if(url.equals("/user/create")) {
-                createUser(request, response);
-            } else if(url.equals("/user/login")) {
-                login(request, response);
-            } else if(url.equals("/user/list")) {
-                listUser(request, response);
-            } else {
+            if(controller == null) {
                 response.forward(url);
+                return;
             }
+
+            controller.service(request, response);
         } catch (IOException e) {
             log.error(e.getMessage());
         }
