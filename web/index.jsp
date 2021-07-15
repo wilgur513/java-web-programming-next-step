@@ -63,7 +63,8 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.user}">
                         <li><a href="/user/logout" role="button">로그아웃</a></li>
-                        <li><a href="/user/update?userId=${sessionScope.user.userId}" role="button">개인정보수정</a></li>
+                        <li><a href="/user/update" role="button">개인정보수정</a></li>
+                        <li><a href="/user/list" role="button">회원목록</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="user/login.html" role="button">로그인</a></li>
