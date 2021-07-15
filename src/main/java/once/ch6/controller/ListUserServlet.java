@@ -26,7 +26,7 @@ public class ListUserServlet extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("/user/list.jsp");
             rd.forward(req, resp);
         } else {
-            resp.sendRedirect("/user/login.html");
+            resp.sendRedirect("/user/login.jsp");
         }
     }
 }
