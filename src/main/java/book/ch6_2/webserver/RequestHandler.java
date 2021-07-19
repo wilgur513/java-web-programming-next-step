@@ -33,7 +33,7 @@ public class RequestHandler extends Thread {
             String url = getDefaultPath(request.getPath());
             Controller controller = RequestMapping.getController(url);
 
-            if(getSessionId(request.getHeader("Cookie")) == null) {
+            if(request.getCookies().getCookie("JSESSIONID") == null) {
                 response.addHeader("Set-Cookie", "JSESSIONID=" + UUID.randomUUID());
             }
 
@@ -55,10 +55,4 @@ public class RequestHandler extends Thread {
 
         return path;
     }
-
-    private String getSessionId(String cookieValue) {
-        Map<String, String> cookies = HttpRequestUtils.parseCookies(cookieValue);
-        return cookies.get("JSESSIONID");
-    }
-
 }
