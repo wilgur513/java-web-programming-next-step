@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import once.ch6.db.DataBase;
 
-//@WebServlet("/user/create")
 public class CreateUserController implements Controller {
     private static final Logger log = LoggerFactory.getLogger(CreateUserController.class);
 

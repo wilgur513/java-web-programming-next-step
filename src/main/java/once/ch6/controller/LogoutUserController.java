@@ -11,7 +11,6 @@ import java.io.IOException;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-//@WebServlet("/user/logout")
 public class LogoutUserController implements Controller {
     private static final Logger LOGGER = getLogger(LogoutUserController.class);
 

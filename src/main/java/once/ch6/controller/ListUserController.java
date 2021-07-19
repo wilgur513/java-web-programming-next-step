@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import once.ch6.db.DataBase;
 
-//@WebServlet("/user/list")
 public class ListUserController implements Controller {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
