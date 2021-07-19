@@ -10,7 +10,7 @@ import java.util.Map;
 public class ListUserController extends AbstractController {
     @Override
     protected void doGet(HttpRequest request, HttpResponse response) {
-        if(!isLogin(request.getHeader("Cookie"))) {
+        if(!isLogin(request.getSession())) {
             response.sendRedirect("/user/login.html");
             return;
         }
@@ -30,13 +30,7 @@ public class ListUserController extends AbstractController {
         response.forwardBody(sb.toString());
     }
 
-    private boolean isLogin(String cookieValue) {
-        Map<String, String> cookies = HttpRequestUtils.parseCookies(cookieValue);
-
-        if(cookies.get("logined") == null) {
-            return false;
-        }
-
-        return Boolean.parseBoolean(cookies.get("logined"));
+    private boolean isLogin(HttpSession session) {
+        return session.getAttribute("user") != null;
     }
 }

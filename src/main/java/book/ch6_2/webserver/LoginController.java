@@ -10,7 +10,8 @@ public class LoginController extends AbstractController {
 
         if(user != null) {
             if(user.login(request.getParameter("password"))) {
-                response.addHeader("Set-Cookie", "logined=true");
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
                 response.sendRedirect("/index.html");
                 return;
             }
