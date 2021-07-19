@@ -8,7 +8,7 @@ public class HttpSession {
     private UUID uuid;
     private Map<String, Object> attributes;
 
-    private HttpSession(UUID uuid) {
+    public HttpSession(UUID uuid) {
         this.uuid = uuid;
         this.attributes = new HashMap<>();
     }

@@ -1,6 +1,7 @@
 package book.ch5.webserver;
 
 import once.ch6_2.http.HttpSession;
+import once.ch6_2.http.SessionStore;
 import org.junit.Test;
 
 import java.io.File;
@@ -47,11 +48,13 @@ public class HttpRequestTest {
     }
 
     @Test
-    public void session_find_by_cookie() {
+    public void session_find_by_cookie() throws FileNotFoundException {
+        SessionStore.save(new HttpSession(UUID.fromString("550e8400-e29b-41d4-a716-446655440000")));
+
         InputStream in = new FileInputStream(new File(testDir + "Http_Has_Cookie.txt"));
         HttpRequest request = new HttpRequest(in);
         HttpSession session = request.getSession();
 
-        assertThat(request.getSession(), is(session));
+        assertThat(session.getId(), is("550e8400-e29b-41d4-a716-446655440000"));
     }
 }

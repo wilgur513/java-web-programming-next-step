@@ -1,0 +1,6 @@
+GET /index.html HTTP/1.1
+Host: localhost:8080
+Connection: keep-alive
+Accept: */*
+Cookie: JSESSIONID=550e8400-e29b-41d4-a716-446655440000
+

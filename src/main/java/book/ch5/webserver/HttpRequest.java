@@ -20,7 +20,7 @@ public class HttpRequest {
     private Map<String, String> params = new HashMap<>();
     private Map<String, String> headers = new HashMap<>();
     private Map<String, String> cookies = new HashMap<>();
-    private String sessionId = null;
+    private HttpSession session = null;
 
     public HttpRequest(InputStream in) {
         try{
@@ -74,16 +74,20 @@ public class HttpRequest {
     }
 
     public HttpSession getSession() {
-        if(sessionId == null) {
-            HttpSession session = HttpSession.create();
-            sessionId = session.getId();
-            SessionStore.save(session);
-
+        if(session != null) {
             return session;
         }
 
-        return SessionStore.get(sessionId);
+        if(hasSessionId()) {
+            return SessionStore.get(cookies.get("JSESSIONID"));
+        }
+
+        session = HttpSession.create();
+        SessionStore.save(session);
+        return session;
     }
 
-
+    private boolean hasSessionId() {
+        return cookies.get("JSESSIONID") != null;
+    }
 }
