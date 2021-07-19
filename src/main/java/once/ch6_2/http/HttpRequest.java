@@ -17,6 +17,8 @@ public class HttpRequest {
     private RequestLine requestLine;
     private Map<String, String> params = new HashMap<>();
     private Map<String, String> headers = new HashMap<>();
+    private Map<String, String> cookies = new HashMap<>();
+    private HttpSession session = null;
 
     public HttpRequest(InputStream in) {
         try{
@@ -34,6 +36,11 @@ public class HttpRequest {
                 LOGGER.debug("header: {}", line);
                 String[] tokens = line.split(":");
                 headers.put(tokens[0].trim(), tokens[1].trim());
+
+                if(tokens[0].trim().equals("Cookie")) {
+                    cookies = book.ch5.util.HttpRequestUtils.parseCookies(tokens[1].trim());
+                }
+
                 line = reader.readLine();
             }
 
@@ -65,6 +72,20 @@ public class HttpRequest {
     }
 
     public HttpSession getSession() {
-        return null;
+        if(session != null) {
+            return session;
+        }
+
+        if(hasSessionId()) {
+            return SessionStore.get(cookies.get("JSESSIONID"));
+        }
+
+        session = HttpSession.create();
+        SessionStore.save(session);
+        return session;
+    }
+
+    private boolean hasSessionId() {
+        return cookies.get("JSESSIONID") != null;
     }
 }

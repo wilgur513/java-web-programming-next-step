@@ -1,6 +1,7 @@
 package once.ch6_2.controller;
 
 import once.ch6_2.db.DataBase;
+import once.ch6_2.http.HttpSession;
 import once.ch6_2.model.User;
 import once.ch6_2.util.HttpRequestUtils;
 import once.ch6_2.http.HttpRequest;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class ListUserController extends AbstractController {
     @Override
     protected void doGet(HttpRequest request, HttpResponse response) {
-        if(!isLogin(request.getHeader("Cookie"))) {
+        if(!isLogin(request.getSession())) {
             response.sendRedirect("/user/login.html");
             return;
         }
@@ -32,13 +33,8 @@ public class ListUserController extends AbstractController {
         response.forwardBody(sb.toString());
     }
 
-    private boolean isLogin(String cookieValue) {
-        Map<String, String> cookies = HttpRequestUtils.parseCookies(cookieValue);
-
-        if(cookies.get("logined") == null) {
-            return false;
-        }
-
-        return Boolean.parseBoolean(cookies.get("logined"));
+    private boolean isLogin(HttpSession session) {
+        Object user = session.getAttribute("user");
+        return user != null ? true : false;
     }
 }

@@ -10,7 +10,6 @@ public class SessionStoreTest {
     @Test
     public void 세션을_저장() {
         HttpSession session = HttpSession.create();
-
         SessionStore.save(session);
 
         assertThat(SessionStore.get(session.getId()), is(session));
@@ -19,7 +18,6 @@ public class SessionStoreTest {
     @Test
     public void 세션을_제거() {
         HttpSession session = HttpSession.create();
-
         SessionStore.save(session);
         SessionStore.remove(session.getId());
 
