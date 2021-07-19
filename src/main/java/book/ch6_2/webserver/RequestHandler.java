@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Collection;
 import java.util.Map;
+import java.util.UUID;
 
 public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
@@ -32,6 +33,10 @@ public class RequestHandler extends Thread {
             String url = getDefaultPath(request.getPath());
             Controller controller = RequestMapping.getController(url);
 
+            if(getSessionId(request.getHeader("Cookie")) == null) {
+                response.addHeader("Set-Cookie", "JSESSIONID=" + UUID.randomUUID());
+            }
+
             if(controller == null) {
                 response.forward(url);
                 return;
@@ -43,53 +48,6 @@ public class RequestHandler extends Thread {
         }
     }
 
-    private void listUser(HttpRequest request, HttpResponse response) {
-        if(!isLogin(request.getHeader("Cookie"))) {
-            response.sendRedirect("/user/login.html");
-            return;
-        }
-
-        Collection<User> users = DataBase.findAll();
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table border='1'>");
-        for(User user : users) {
-            sb.append("<tr>");
-            sb.append("<td>" + user.getUserId() + "</td>");
-            sb.append("<td>" + user.getName() + "</td>");
-            sb.append("<td>" + user.getEmail() + "</td>");
-            sb.append("</tr>");
-        }
-        sb.append("</table>");
-
-        response.forwardBody(sb.toString());
-    }
-
-    private void login(HttpRequest request, HttpResponse response) {
-        User user = DataBase.findUserById(request.getParameter("userId"));
-
-        if(user != null) {
-            if(user.login(request.getParameter("password"))) {
-                response.addHeader("Set-Cookie", "logined=true");
-                response.sendRedirect("/index.html");
-                return;
-            }
-        }
-
-        response.sendRedirect("/user/login_failed.html");
-    }
-
-    private void createUser(HttpRequest request, HttpResponse response) {
-        User user = new User(
-                request.getParameter("userId"),
-                request.getParameter("password"),
-                request.getParameter("name"),
-                request.getParameter("email"));
-        log.debug("User : {}", user);
-        DataBase.addUser(user);
-        response.sendRedirect("/index.html");
-    }
-
-
     private String getDefaultPath(String path) {
         if(path.equals("/")) {
             return "/index.html";
@@ -98,13 +56,9 @@ public class RequestHandler extends Thread {
         return path;
     }
 
-    private boolean isLogin(String cookieValue) {
+    private String getSessionId(String cookieValue) {
         Map<String, String> cookies = HttpRequestUtils.parseCookies(cookieValue);
-
-        if(cookies.get("logined") == null) {
-            return false;
-        }
-
-        return Boolean.parseBoolean(cookies.get("logined"));
+        return cookies.get("JSESSIONID");
     }
+
 }
