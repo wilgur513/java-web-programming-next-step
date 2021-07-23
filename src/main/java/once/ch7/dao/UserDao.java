@@ -12,14 +12,14 @@ import java.util.List;
 
 public class UserDao {
     public void insert(User user) throws SQLException {
-        InsertJdbcTemplate template = new InsertJdbcTemplate() {
+        JdbcTemplate template = new JdbcTemplate() {
             @Override
-            public String createQueryForInsert() {
+            public String createQuery() {
                 return "INSERT INTO USERS VALUES (?, ?, ?, ?)";
             }
 
             @Override
-            public void setValuesForInsert(User user, PreparedStatement pstmt) throws SQLException {
+            public void setValues(User user, PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, user.getUserId());
                 pstmt.setString(2, user.getPassword());
                 pstmt.setString(3, user.getName());
@@ -27,18 +27,18 @@ public class UserDao {
             }
         };
 
-        template.insert(user);
+        template.update(user);
     }
 
     public void update(User user) throws SQLException {
-        UpdateJdbcTemplate template = new UpdateJdbcTemplate() {
+        JdbcTemplate template = new JdbcTemplate() {
             @Override
-            public String createQueryForUpdate() {
+            public String createQuery() {
                 return "update USERS set userId=?, password=?, name=?, email=? where userId=?";
             }
 
             @Override
-            public void setValuesForUpdate(User user, PreparedStatement pstmt) throws SQLException {
+            public void setValues(User user, PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, user.getUserId());
                 pstmt.setString(2, user.getPassword());
                 pstmt.setString(3, user.getName());
