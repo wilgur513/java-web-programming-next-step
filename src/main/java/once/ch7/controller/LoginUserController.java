@@ -1,11 +1,13 @@
 package once.ch7.controller;
 
-import once.ch7.db.DataBase;
+import once.ch7.dao.UserDao;
 import once.ch7.model.User;
 import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.sql.SQLException;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -16,7 +18,15 @@ public class LoginUserController implements Controller {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String userId = req.getParameter("userId");
         String password = req.getParameter("password");
-        User user = DataBase.findUserById(userId);
+        User user;
+
+        try {
+            UserDao userDao = new UserDao();
+            user = userDao.findByUserId(userId);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
 
         LOGGER.debug("login user : {}", user);
 

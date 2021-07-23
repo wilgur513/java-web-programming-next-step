@@ -1,6 +1,5 @@
 package once.ch7;
 
-import ch6.controller.*;
 import once.ch7.controller.*;
 
 import java.util.HashMap;

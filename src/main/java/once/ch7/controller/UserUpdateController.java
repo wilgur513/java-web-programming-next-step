@@ -1,11 +1,13 @@
 package once.ch7.controller;
 
-import once.ch7.db.DataBase;
+import once.ch7.dao.UserDao;
 import once.ch7.model.User;
 import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.sql.SQLException;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -22,7 +24,14 @@ public class UserUpdateController implements Controller {
 
         LOGGER.debug("updated user : {}", user);
 
-        DataBase.addUser(user);
+        try {
+            UserDao userDao = new UserDao();
+            userDao.update(user);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
         return "redirect:/user/list";
     }
 }
