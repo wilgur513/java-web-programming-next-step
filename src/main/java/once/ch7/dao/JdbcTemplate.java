@@ -9,15 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class JdbcTemplate {
-    public void update(final String sql) throws SQLException {
+public class JdbcTemplate {
+    public void update(final String sql, final PreparedStatementSetter setter) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
 
         try {
             con = ConnectionManager.getConnection();
             pstmt = con.prepareStatement(sql);
-            setValues(pstmt);
+            setter.setValues(pstmt);
             pstmt.executeUpdate();
         } finally {
             if (pstmt != null) {
@@ -30,7 +30,7 @@ public abstract class JdbcTemplate {
         }
     }
 
-    public List query(final String sql) throws SQLException {
+    public List query(final String sql, final PreparedStatementSetter setter, final RowMapper rowMapper) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -42,7 +42,7 @@ public abstract class JdbcTemplate {
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
-                result.add(mapRow(rs));
+                result.add(rowMapper.mapRow(rs));
             }
 
             return result;
@@ -59,18 +59,18 @@ public abstract class JdbcTemplate {
         }
     }
 
-    public Object queryForObject(final String sql) throws SQLException {
+    public Object queryForObject(final String sql, final PreparedStatementSetter setter, final RowMapper rowMapper) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             con = ConnectionManager.getConnection();
             pstmt = con.prepareStatement(sql);
-            setValues(pstmt);
+            setter.setValues(pstmt);
             rs = pstmt.executeQuery();
             Object result = null;
             if (rs.next()) {
-                result = mapRow(rs);
+                result = rowMapper.mapRow(rs);
             }
             return result;
         } finally {
@@ -85,7 +85,4 @@ public abstract class JdbcTemplate {
             }
         }
     }
-
-    abstract public void setValues(PreparedStatement pstmt) throws SQLException;
-    public abstract Object mapRow(ResultSet rs) throws SQLException;
 }
