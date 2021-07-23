@@ -10,35 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcTemplate {
-    public void update(final String sql, final PreparedStatementSetter setter) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(sql);
+    public void update(final String sql, final PreparedStatementSetter setter) {
+        try(Connection con = ConnectionManager.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)) {
             setter.setValues(pstmt);
             pstmt.executeUpdate();
-        } finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-
-            if (con != null) {
-                con.close();
-            }
+        } catch (SQLException e) {
+            throw new DataAccessException();
         }
     }
 
-    public List query(final String sql, final PreparedStatementSetter setter, final RowMapper rowMapper) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
+    public List query(final String sql, final PreparedStatementSetter setter, final RowMapper rowMapper) {
         ResultSet rs = null;
 
-        try {
+        try (Connection con = ConnectionManager.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql);){
             List result = new ArrayList();
-            con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(sql);
+            setter.setValues(pstmt);
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
@@ -46,26 +34,23 @@ public class JdbcTemplate {
             }
 
             return result;
+        } catch (SQLException e){
+          throw new DataAccessException();
         } finally {
             if (rs != null) {
-                rs.close();
-            }
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (con != null) {
-                con.close();
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new DataAccessException();
+                }
             }
         }
     }
 
-    public Object queryForObject(final String sql, final PreparedStatementSetter setter, final RowMapper rowMapper) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
+    public Object queryForObject(final String sql, final PreparedStatementSetter setter, final RowMapper rowMapper) {
         ResultSet rs = null;
-        try {
-            con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(sql);
+        try (Connection con = ConnectionManager.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql)){
             setter.setValues(pstmt);
             rs = pstmt.executeQuery();
             Object result = null;
@@ -73,15 +58,15 @@ public class JdbcTemplate {
                 result = rowMapper.mapRow(rs);
             }
             return result;
+        } catch (SQLException e){
+            throw new DataAccessException();
         } finally {
             if (rs != null) {
-                rs.close();
-            }
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (con != null) {
-                con.close();
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    throw new DataAccessException();
+                }
             }
         }
     }

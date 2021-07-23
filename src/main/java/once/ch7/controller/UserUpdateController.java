@@ -24,13 +24,8 @@ public class UserUpdateController implements Controller {
 
         LOGGER.debug("updated user : {}", user);
 
-        try {
-            UserDao userDao = new UserDao();
-            userDao.update(user);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+        UserDao userDao = new UserDao();
+        userDao.update(user);
 
         return "redirect:/user/list";
     }

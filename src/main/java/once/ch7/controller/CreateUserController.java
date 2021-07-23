@@ -17,14 +17,8 @@ public class CreateUserController implements Controller {
         User user = new User(req.getParameter("userId"), req.getParameter("password"), req.getParameter("name"),
                 req.getParameter("email"));
         log.debug("user : {}", user);
-
-        try {
-            UserDao userDao = new UserDao();
-            userDao.insert(user);
-        } catch (SQLException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+        UserDao userDao = new UserDao();
+        userDao.insert(user);
 
         return "redirect:/user/list";
     }

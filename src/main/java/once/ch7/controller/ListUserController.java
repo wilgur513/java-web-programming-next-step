@@ -18,13 +18,8 @@ public class ListUserController implements Controller {
         Object obj = session.getAttribute("user");
 
         if(obj != null) {
-            try {
-                UserDao userDao = new UserDao();
-                req.setAttribute("users", userDao.findAll());
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage());
-                throw new RuntimeException(e);
-            }
+            UserDao userDao = new UserDao();
+            req.setAttribute("users", userDao.findAll());
             return "/user/list.jsp";
         } else {
             return "redirect:/user/login";

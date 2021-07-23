@@ -20,14 +20,8 @@ public class LoginUserController implements Controller {
         String password = req.getParameter("password");
         User user;
 
-        try {
-            UserDao userDao = new UserDao();
-            user = userDao.findByUserId(userId);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
-
+        UserDao userDao = new UserDao();
+        user = userDao.findByUserId(userId);
         LOGGER.debug("login user : {}", user);
 
         if(user != null && user.getPassword().equals(password)) {
