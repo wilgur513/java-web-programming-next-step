@@ -12,12 +12,7 @@ import java.util.List;
 
 public class UserDao {
     public void insert(User user) throws SQLException {
-        JdbcTemplate template = new JdbcTemplate() {
-            @Override
-            public String createQuery() {
-                return "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-            }
-
+        JdbcTemplate template = new JdbcTemplate("INSERT INTO USERS VALUES (?, ?, ?, ?)") {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, user.getUserId());
@@ -31,12 +26,7 @@ public class UserDao {
     }
 
     public void update(User user) throws SQLException {
-        JdbcTemplate template = new JdbcTemplate() {
-            @Override
-            public String createQuery() {
-                return "update USERS set userId=?, password=?, name=?, email=? where userId=?";
-            }
-
+        JdbcTemplate template = new JdbcTemplate("update USERS set userId=?, password=?, name=?, email=? where userId=?") {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, user.getUserId());
