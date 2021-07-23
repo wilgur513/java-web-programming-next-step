@@ -41,60 +41,28 @@ public class UserDao {
     }
 
     public List<User> findAll() throws SQLException {
-        List<User> result = new ArrayList<>();
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        return new SelectJdbcTemplate().query(this);
+    }
 
-        try {
-            con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement("select * from USERS");
-            rs = pstmt.executeQuery();
+    String createQueryForList() {
+        return "select * from USERS";
+    }
 
-            while(rs.next()) {
-                result.add(
-                    new User(rs.getString("userId"), rs.getString("password"),
-                            rs.getString("name"), rs.getString("email")));
-            }
-
-        } finally {
-            rs.close();
-            pstmt.close();
-            con.close();
-        }
-
-        return result;
+    User mapRow(ResultSet rs) throws SQLException {
+        User user = new User(rs.getString("userId"), rs.getString("password"),
+                            rs.getString("name"), rs.getString("email"));
+        return user;
     }
 
     public User findByUserId(String userId) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            con = ConnectionManager.getConnection();
-            String sql = "SELECT userId, password, name, email FROM USERS WHERE userid=?";
-            pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, userId);
+        return (User) new SelectJdbcTemplate().queryForObject(userId, this);
+    }
 
-            rs = pstmt.executeQuery();
+    String createQueryForObject() {
+        return "SELECT userId, password, name, email FROM USERS WHERE userid=?";
+    }
 
-            User user = null;
-            if (rs.next()) {
-                user = new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"),
-                        rs.getString("email"));
-            }
-
-            return user;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
+    void setValuesForQuery(String userId, PreparedStatement pstmt) throws SQLException {
+        pstmt.setString(1, userId);
     }
 }
