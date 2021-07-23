@@ -47,9 +47,9 @@ public class UserDao {
             }
         };
 
-        RowMapper mapper = new RowMapper() {
+        RowMapper<User> mapper = new RowMapper<User>() {
             @Override
-            public Object mapRow(ResultSet rs) throws SQLException {
+            public User mapRow(ResultSet rs) throws SQLException {
                 return new User(rs.getString("userId"), rs.getString("password"),
                         rs.getString("name"), rs.getString("email"));
             }
@@ -67,9 +67,9 @@ public class UserDao {
             }
         };
 
-        RowMapper mapper = new RowMapper() {
+        RowMapper<User> mapper = new RowMapper<User>() {
             @Override
-            public Object mapRow(ResultSet rs) throws SQLException {
+            public User mapRow(ResultSet rs) throws SQLException {
                 return new User(rs.getString("userId"), rs.getString("password"),
                         rs.getString("name"), rs.getString("email"));
             }
@@ -77,7 +77,7 @@ public class UserDao {
 
         JdbcTemplate template = new JdbcTemplate();
 
-        return (User) template.queryForObject("SELECT userId, password, name, email FROM USERS WHERE userid=?",
+        return template.queryForObject("SELECT userId, password, name, email FROM USERS WHERE userid=?",
                 setter, mapper);
     }
 
