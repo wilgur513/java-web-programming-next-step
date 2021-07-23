@@ -1,9 +1,10 @@
-package once.ch7;
+package once.ch7.dao;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import once.ch7.ConnectionManager;
 import once.ch7.dao.UserDao;
 import once.ch7.model.User;
 import org.junit.Before;
