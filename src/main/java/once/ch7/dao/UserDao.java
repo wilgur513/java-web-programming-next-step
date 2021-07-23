@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserDao {
     public void insert(User user) throws SQLException {
-        JdbcTemplate template = new JdbcTemplate("INSERT INTO USERS VALUES (?, ?, ?, ?)") {
+        JdbcTemplate template = new JdbcTemplate() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, user.getUserId());
@@ -22,11 +22,11 @@ public class UserDao {
             }
         };
 
-        template.update();
+        template.update("INSERT INTO USERS VALUES (?, ?, ?, ?)");
     }
 
     public void update(User user) throws SQLException {
-        JdbcTemplate template = new JdbcTemplate("update USERS set userId=?, password=?, name=?, email=? where userId=?") {
+        JdbcTemplate template = new JdbcTemplate() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, user.getUserId());
@@ -37,16 +37,11 @@ public class UserDao {
             }
         };
 
-        template.update();
+        template.update("update USERS set userId=?, password=?, name=?, email=? where userId=?");
     }
 
     public List<User> findAll() throws SQLException {
         SelectJdbcTemplate template = new SelectJdbcTemplate(){
-            @Override
-            public String createQuery() {
-                return "select * from USERS";
-            }
-
             @Override
             public void setValues(PreparedStatement pstmt) {
 
@@ -59,17 +54,12 @@ public class UserDao {
             }
         };
 
-        return template.query();
+        return template.query("select * from USERS");
     }
 
 
     public User findByUserId(String userId) throws SQLException {
         SelectJdbcTemplate template = new SelectJdbcTemplate() {
-            @Override
-            public String createQuery() {
-                return "SELECT userId, password, name, email FROM USERS WHERE userid=?";
-            }
-
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, userId);
@@ -82,7 +72,7 @@ public class UserDao {
             }
         };
 
-        return (User) template.queryForObject();
+        return (User) template.queryForObject("SELECT userId, password, name, email FROM USERS WHERE userid=?");
     }
 
 }

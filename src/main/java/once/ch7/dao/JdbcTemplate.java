@@ -8,13 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class JdbcTemplate {
-    private final String sql;
-
-    public JdbcTemplate(String sql) {
-        this.sql = sql;
-    }
-
-    public void update() throws SQLException {
+    public void update(final String sql) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
 

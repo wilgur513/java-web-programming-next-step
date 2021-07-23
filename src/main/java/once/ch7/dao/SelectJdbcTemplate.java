@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SelectJdbcTemplate {
-    public List query() throws SQLException {
+    public List query(final String sql) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -19,7 +19,7 @@ public abstract class SelectJdbcTemplate {
         try {
             List result = new ArrayList();
             con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(createQuery());
+            pstmt = con.prepareStatement(sql);
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
@@ -40,13 +40,13 @@ public abstract class SelectJdbcTemplate {
         }
     }
 
-    public Object queryForObject() throws SQLException {
+    public Object queryForObject(final String sql) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(createQuery());
+            pstmt = con.prepareStatement(sql);
             setValues(pstmt);
             rs = pstmt.executeQuery();
             Object result = null;
@@ -67,7 +67,6 @@ public abstract class SelectJdbcTemplate {
         }
     }
 
-    public abstract String createQuery();
     public abstract void setValues(PreparedStatement pstmt) throws SQLException;
     public abstract Object mapRow(ResultSet rs) throws SQLException;
 }
