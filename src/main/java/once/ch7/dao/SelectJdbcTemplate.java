@@ -40,18 +40,15 @@ public abstract class SelectJdbcTemplate {
         }
     }
 
-    public Object queryForObject(String userId) throws SQLException {
+    public Object queryForObject() throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             con = ConnectionManager.getConnection();
             pstmt = con.prepareStatement(createQuery());
-
-            setValues(userId, pstmt);
-
+            setValues(pstmt);
             rs = pstmt.executeQuery();
-
             Object result = null;
             if (rs.next()) {
                 result = mapRow(rs);
@@ -71,6 +68,6 @@ public abstract class SelectJdbcTemplate {
     }
 
     public abstract String createQuery();
-    public abstract void setValues(String userId, PreparedStatement pstmt) throws SQLException;
+    public abstract void setValues(PreparedStatement pstmt) throws SQLException;
     public abstract Object mapRow(ResultSet rs) throws SQLException;
 }

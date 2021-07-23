@@ -48,7 +48,7 @@ public class UserDao {
             }
 
             @Override
-            public void setValues(String userId, PreparedStatement pstmt) {
+            public void setValues(PreparedStatement pstmt) {
 
             }
 
@@ -71,7 +71,7 @@ public class UserDao {
             }
 
             @Override
-            public void setValues(String userId, PreparedStatement pstmt) throws SQLException {
+            public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, userId);
             }
 
@@ -81,8 +81,8 @@ public class UserDao {
                         rs.getString("name"), rs.getString("email"));
             }
         };
-        
-        return (User) template.queryForObject(userId);
+
+        return (User) template.queryForObject();
     }
 
 }
