@@ -41,28 +41,48 @@ public class UserDao {
     }
 
     public List<User> findAll() throws SQLException {
-        return new SelectJdbcTemplate().query(this);
+        SelectJdbcTemplate template = new SelectJdbcTemplate(){
+            @Override
+            public String createQuery() {
+                return "select * from USERS";
+            }
+
+            @Override
+            public void setValues(String userId, PreparedStatement pstmt) {
+
+            }
+
+            @Override
+            public Object mapRow(ResultSet rs) throws SQLException {
+                return new User(rs.getString("userId"), rs.getString("password"),
+                        rs.getString("name"), rs.getString("email"));
+            }
+        };
+
+        return template.query();
     }
 
-    String createQueryForList() {
-        return "select * from USERS";
-    }
-
-    User mapRow(ResultSet rs) throws SQLException {
-        User user = new User(rs.getString("userId"), rs.getString("password"),
-                            rs.getString("name"), rs.getString("email"));
-        return user;
-    }
 
     public User findByUserId(String userId) throws SQLException {
-        return (User) new SelectJdbcTemplate().queryForObject(userId, this);
+        SelectJdbcTemplate template = new SelectJdbcTemplate() {
+            @Override
+            public String createQuery() {
+                return "SELECT userId, password, name, email FROM USERS WHERE userid=?";
+            }
+
+            @Override
+            public void setValues(String userId, PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, userId);
+            }
+
+            @Override
+            public Object mapRow(ResultSet rs) throws SQLException {
+                return new User(rs.getString("userId"), rs.getString("password"),
+                        rs.getString("name"), rs.getString("email"));
+            }
+        };
+        
+        return (User) template.queryForObject(userId);
     }
 
-    String createQueryForObject() {
-        return "SELECT userId, password, name, email FROM USERS WHERE userid=?";
-    }
-
-    void setValuesForQuery(String userId, PreparedStatement pstmt) throws SQLException {
-        pstmt.setString(1, userId);
-    }
 }

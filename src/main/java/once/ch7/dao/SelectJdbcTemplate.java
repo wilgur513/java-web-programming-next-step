@@ -10,20 +10,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectJdbcTemplate {
-    public List query(UserDao userDao) throws SQLException {
+public abstract class SelectJdbcTemplate {
+    public List query() throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-            List<User> result = new ArrayList<>();
+            List result = new ArrayList();
             con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(userDao.createQueryForList());
+            pstmt = con.prepareStatement(createQuery());
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
-                result.add(userDao.mapRow(rs));
+                result.add(mapRow(rs));
             }
 
             return result;
@@ -40,24 +40,23 @@ public class SelectJdbcTemplate {
         }
     }
 
-    public Object queryForObject(String userId, UserDao userDao) throws SQLException {
+    public Object queryForObject(String userId) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             con = ConnectionManager.getConnection();
-            pstmt = con.prepareStatement(userDao.createQueryForObject());
+            pstmt = con.prepareStatement(createQuery());
 
-            userDao.setValuesForQuery(userId, pstmt);
+            setValues(userId, pstmt);
 
             rs = pstmt.executeQuery();
 
-            User user = null;
+            Object result = null;
             if (rs.next()) {
-                user = userDao.mapRow(rs);
+                result = mapRow(rs);
             }
-
-            return user;
+            return result;
         } finally {
             if (rs != null) {
                 rs.close();
@@ -70,4 +69,8 @@ public class SelectJdbcTemplate {
             }
         }
     }
+
+    public abstract String createQuery();
+    public abstract void setValues(String userId, PreparedStatement pstmt) throws SQLException;
+    public abstract Object mapRow(ResultSet rs) throws SQLException;
 }
