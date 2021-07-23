@@ -1,13 +1,10 @@
 package once.ch7.dao;
 
-import once.ch7.ConnectionManager;
 import once.ch7.model.User;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
@@ -19,6 +16,11 @@ public class UserDao {
                 pstmt.setString(2, user.getPassword());
                 pstmt.setString(3, user.getName());
                 pstmt.setString(4, user.getEmail());
+            }
+
+            @Override
+            public Object mapRow(ResultSet rs) throws SQLException {
+                return null;
             }
         };
 
@@ -35,13 +37,18 @@ public class UserDao {
                 pstmt.setString(4, user.getEmail());
                 pstmt.setString(5, user.getUserId());
             }
+
+            @Override
+            public Object mapRow(ResultSet rs) throws SQLException {
+                return null;
+            }
         };
 
         template.update("update USERS set userId=?, password=?, name=?, email=? where userId=?");
     }
 
     public List<User> findAll() throws SQLException {
-        SelectJdbcTemplate template = new SelectJdbcTemplate(){
+        JdbcTemplate template = new JdbcTemplate(){
             @Override
             public void setValues(PreparedStatement pstmt) {
 
@@ -59,7 +66,7 @@ public class UserDao {
 
 
     public User findByUserId(String userId) throws SQLException {
-        SelectJdbcTemplate template = new SelectJdbcTemplate() {
+        JdbcTemplate template = new JdbcTemplate() {
             @Override
             public void setValues(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, userId);
