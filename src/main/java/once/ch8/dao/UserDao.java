@@ -1,5 +1,6 @@
 package once.ch8.dao;
 
+import once.ch8.dao.core.JdbcTemplate;
 import once.ch8.model.User;
 
 import java.sql.ResultSet;
