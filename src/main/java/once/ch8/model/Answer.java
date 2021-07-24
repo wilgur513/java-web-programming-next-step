@@ -1,15 +1,15 @@
 package once.ch8.model;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 public class Answer {
     private Long answerId;
     private String writer;
     private String contents;
-    private LocalDate createdDate;
+    private Timestamp createdDate;
     private Long questionId;
 
-    public Answer(Long answerId, String writer, String contents, LocalDate createdDate, Long questionId) {
+    public Answer(Long answerId, String writer, String contents, Timestamp createdDate, Long questionId) {
         this.answerId = answerId;
         this.writer = writer;
         this.contents = contents;
@@ -29,7 +29,7 @@ public class Answer {
         return contents;
     }
 
-    public LocalDate getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
