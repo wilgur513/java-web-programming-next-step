@@ -1,20 +1,20 @@
 package once.ch8.model;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 public class Question {
     private Long questionId;
     private String title;
     private String writer;
-    private String content;
-    private LocalDate timestamp;
+    private String contents;
+    private Timestamp timestamp;
     private int countOfAnswer;
 
-    public Question(Long questionId, String title, String writer, String content, LocalDate timestamp, int countOfAnswer) {
+    public Question(Long questionId, String title, String writer, String contents, Timestamp timestamp, int countOfAnswer) {
         this.questionId = questionId;
         this.title = title;
         this.writer = writer;
-        this.content = content;
+        this.contents = contents;
         this.timestamp = timestamp;
         this.countOfAnswer = countOfAnswer;
     }
@@ -31,11 +31,11 @@ public class Question {
         return writer;
     }
 
-    public String getContent() {
-        return content;
+    public String getContents() {
+        return contents;
     }
 
-    public LocalDate getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
